@@ -9,9 +9,19 @@ class PlacesController < ApplicationController
     @posts = Post.where({ "place_id" => @place["id"] })
   end
 
+  # def new
+  #   @place = Place.new
+  # end
+
   def new
-    @place = Place.new
+    if @current_user
+      @place = Place.new
+    else
+      flash[:notice] = "Please log in or sign up to create a place."
+      redirect_to signup_path
+    end
   end
+
 
   def create
     @place = Place.new
